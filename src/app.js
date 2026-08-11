@@ -10,8 +10,11 @@ app.get("/hello", (req, res)=>{
     res.send("HELLO guys😂");
 });
 
-app.get("/test",(req, res)=>{
-    res.send("Hello from the Server");
+app.get("/user", (req, res)=>{
+    res.send({
+        "First Name":"Asmit",
+        "Last Name" :"Singh"
+    });
 });
 
 app.listen(3000, ()=>{
