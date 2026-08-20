@@ -15,6 +15,17 @@ const validateSignUpData=(req)=>{
 
 }
 
+const validateEditProfileData =(req)=>{
+    const allowedEditFields =["firstName", "lastName", "age", "gender", "photoUrl", "about", "skills"];
+
+    //every key of req is now a filed and cheking whether every files is included
+    //in out list, only those can be modified
+    const isEditAllowed = Object.keys(req.body).every(field=>allowedEditFields.includes(field));
+    
+    return isEditAllowed;
+}
+
 module.exports={
     validateSignUpData,
+    validateEditProfileData,
 }

@@ -10,7 +10,7 @@ const userAuth = async(req, res , next)=>{
         throw new Error("Token is INVALID!!!");
     }
     //validate the token 
-    const decodedObj = await jwt.verify(token , "devtinder@#123");
+    const decodedObj = await jwt.verify(token , "devTinder@#123");
 
     const{_id} = decodedObj;
 
@@ -26,7 +26,6 @@ catch(err){
     res.status(400).send("ERROR : "+ err.message);
 }
 }
-
 
 module.exports= userAuth;
 
