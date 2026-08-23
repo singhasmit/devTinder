@@ -1,13 +1,16 @@
 const mongoose = require("mongoose");
 
+
 const connectionRequestSchema = new mongoose.Schema(
   {
     fromUserId: {
       type: mongoose.Schema.Types.ObjectId,
+      ref : "User",
       required: true,
     },
     toUserId: {
       type: mongoose.Schema.Types.ObjectId,
+      ref :"User",
       required: true,
     },
     status: {
@@ -26,15 +29,15 @@ const connectionRequestSchema = new mongoose.Schema(
 
 connectionRequestSchema.index({fromUserId: 1, toUserId:1});
 
-//pre -> schema validation .. pre is just like middleware to schema
+//pre -> schema validation ... PRE is just like middleware to schema
 
-connectionRequestSchema.pre("save", function(next){
+connectionRequestSchema.pre("save", async function(){
     const connectionRequest= this;
     // check if fromUserId is same as toUserId
     if(connectionRequest.fromUserId.equals(connectionRequest.toUserId)){
         throw new Error("cannot send connection request to yourself");
     }
-    next(); // never forget to call next 
+   
 })
 
 const ConnectionRequestModel = new mongoose.model(

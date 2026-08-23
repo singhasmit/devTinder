@@ -13,15 +13,15 @@ auth router
 
 
 ##connectionRequestRouter
--POST /request/send/interested/:userId
--POST /request/send/ignored/:userId
+-POST /request/send/:status/:userId
+
 -POST /request/review/accepted/:requestId
 -POST /request/review/rejected/:requestId
 
 
 ##userRouter
+-GET /user/requests/received
 -GET /user/connections
--GET /user/requests
 -GET /feed  -> gets you profile of other users
 
 
