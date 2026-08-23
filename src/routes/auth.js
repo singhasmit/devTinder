@@ -11,18 +11,21 @@ authRouter.post("/signup", async (req, res) => {
     //1. validate signup dATA
     validateSignUpData(req);
 
-    const { firstName, lastName, emailId, password } = req.body;
+    const { firstName, lastName, emailId, password,age , gender , about,skills } = req.body;
 
     //encrypt the password:
 
     const passwordHash = await bcrypt.hash(password, 10);
-    console.log(passwordHash);
-
+    
     const user = new User({
       firstName,
       lastName,
       emailId,
       password: passwordHash,
+      age,
+      gender, 
+      about, 
+      skills
     });
 
     await user.save(); //.save returns promise, therefore we need to make our funcn async
