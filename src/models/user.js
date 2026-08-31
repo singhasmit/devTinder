@@ -1,75 +1,67 @@
 const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
-const bcrypt= require("bcrypt");
+const bcrypt = require("bcrypt");
 
-
-const userSchema = new mongoose.Schema({
-    firstName : {
-        type:String,
-        required : true,
+const userSchema = new mongoose.Schema(
+  {
+    firstName: {
+      type: String,
+      required: true,
     },
-    lastName : {
-        type:String
+    lastName: {
+      type: String,
     },
-    emailId : {
-        type:String,
-        required : true,
-        lowercase : true,
-        unique :true,
+    emailId: {
+      type: String,
+      required: true,
+      lowercase: true,
+      unique: true,
     },
-    password : {
-        type:String,
-        required : true,
+    password: {
+      type: String,
+      required: true,
     },
-    age : {
-        type:Number,
+    age: {
+      type: Number,
     },
     gender: {
-        type:String,
-        enum :{
-            values :["male", "female", "other"],
-            message :`{vALUE} is not a valid gender type`
-        }
-        //validate(value){
-        //if(!["males", "female", "others"].includes(value)){
-        //    throw new Error("Invalid Gender");
-        //}
-        //}
+      type: String,
+      enum: ["Male", "Female", "Other"],
+      set: (value) =>
+        value.charAt(0).toUpperCase() + value.slice(1).toLowerCase(),
     },
-    photoUrl :{
-        type: String,
-        default :"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2ElnqybKu82MrfBK-dIy15kpM1zATiw9ytB8esiA8LGCGoX5dnFns7KzA&s=10",
+    photoUrl: {
+      type: String,
+      default:
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2ElnqybKu82MrfBK-dIy15kpM1zATiw9ytB8esiA8LGCGoX5dnFns7KzA&s=10",
     },
-    about:{
-        type :String,
-        default :"This is a default user",
+    about: {
+      type: String,
+      default: "This is a default user",
     },
-    skills :{
-        type : [String],
+    skills: {
+      type: [String],
     },
-    
-}, 
+  },
 
-{timestamps: true
-}
+  { timestamps: true },
 );
 
-userSchema.methods.getJWT= async function () {
-    const user= this;
-    const token = await jwt.sign({_id : user._id},"devTinder@#123", {
-        expiresIn: "7d",
-    });
+userSchema.methods.getJWT = async function () {
+  const user = this;
+  const token = await jwt.sign({ _id: user._id }, "devTinder@#123", {
+    expiresIn: "7d",
+  });
 
-    return token;
-    
+  return token;
 };
 
-userSchema.methods.validatePassword = async function(password){
-    const user = this;
+userSchema.methods.validatePassword = async function (password) {
+  const user = this;
 
-    const isPassowrdValid = await bcrypt.compare(password, user.password);
+  const isPassowrdValid = await bcrypt.compare(password, user.password);
 
-    return isPassowrdValid;
+  return isPassowrdValid;
 };
 
 const userModel = mongoose.model("User", userSchema);

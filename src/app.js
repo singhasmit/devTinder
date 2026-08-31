@@ -7,7 +7,12 @@ const app = express();
 
 const cookieParser = require("cookie-parser");
 const jwt = require("jsonwebtoken");
+const cors= require("cors");
 
+app.use(cors({
+  origin : "http://localhost:5173", //whitelisting this domain name
+  credentials: true,
+}));
 app.use(express.json()); //middleware given by express for json
 app.use(cookieParser()); //middleware by express for cookies
 

@@ -40,11 +40,10 @@ authRouter.post("/login", async (req, res) => {
     const { emailId, password } = req.body;
     
     const user = await User.findOne({ emailId: emailId });
-    const firstName = user.firstName;
-
     if (!user) {
-      throw new Error("Invalid Credentials");
+      throw new Error("User not registered. Please SignUp");
     }
+    const firstName = user.firstName;
 
     const isPassowrdValid = await user.validatePassword(password);
 
@@ -57,7 +56,8 @@ authRouter.post("/login", async (req, res) => {
 
       res.cookie("token", token);
 
-      res.send(`Welcome ${firstName}😊, Login SuccessFul...`);
+      res.send(user);
+     
     } else {
       throw new Error("Incorrect Password");
     }
