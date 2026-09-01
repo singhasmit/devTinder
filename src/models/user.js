@@ -28,7 +28,9 @@ const userSchema = new mongoose.Schema(
       type: String,
       enum: ["Male", "Female", "Other"],
       set: (value) =>
-        value.charAt(0).toUpperCase() + value.slice(1).toLowerCase(),
+        value
+          ? value.charAt(0).toUpperCase() + value.slice(1).toLowerCase()
+          : value,
     },
     photoUrl: {
       type: String,
