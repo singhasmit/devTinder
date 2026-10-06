@@ -1,5 +1,9 @@
+require('dotenv').config();
 require("./config/dns.js");
+
+
 require("./config/database.js");
+
 
 const express = require("express");
 const connectDB = require("./config/database.js");
@@ -34,7 +38,7 @@ app.use("/",userRouter);
 connectDB()
   .then(() => {
     console.log("Database Conncection Established");
-    app.listen(3000, () => {
+    app.listen(process.env.PORT, () => {
       console.log("Server is successfully running on port 3000");
     });
   })
