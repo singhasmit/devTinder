@@ -14,7 +14,7 @@ const jwt = require("jsonwebtoken");
 const cors= require("cors");
 
 app.use(cors({
-  origin : "http://localhost:5173", //whitelisting this domain name
+  origin: "https://dev-tinder-frontend-flax.vercel.app",
   credentials: true,
 }));
 app.use(express.json()); //middleware given by express for json
